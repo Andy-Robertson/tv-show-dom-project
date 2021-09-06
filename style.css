@@ -1,11 +1,23 @@
 .root {
   color: #000;
+}
+
+.body {
   background-color: #d74a50;
 }
 .header {
+  display: flex;
+  align-items: center;
   background-color: #4ad7d1;
   height: 3rem;
   margin-bottom: 0.5rem;
+}
+
+.searchBox {
+  margin-left: 0.5rem;
+}
+.displayStatus {
+  padding: 0.5rem;
 }
 
 .episodeListContainer {
