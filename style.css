@@ -1,3 +1,58 @@
-#root {
-  color: red;
+.root {
+  color: #000;
+  background-color: #d74a50;
+}
+.header {
+  background-color: #4ad7d1;
+  height: 3rem;
+  margin-bottom: 0.5rem;
+}
+
+.episodeListContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.episodeCard {
+  display: flex;
+  flex-direction: column;
+  width: 20rem;
+  height: 33rem;
+  margin: 0.5rem;
+  border: 1px solid #4ad7d1;
+  border-radius: 0.5rem;
+  background-color: #fff;
+}
+
+.episodeCard > div:first-of-type {
+  padding: 0.5rem 0 0.5rem 0;
+  background-color: #001730;
+  color: #fff;
+  border-bottom: 4px solid #4ad7d1;
+  border-top: 4px solid #4ad7d1;
+}
+.episodeCard > h2,
+.episodeCard > div:first-of-type {
+  text-align: center;
+}
+
+.episodeCard > img {
+  padding: 1rem 1rem 0 1rem;
+}
+
+.episodeCard > div > p {
+  padding: 0 1rem 0 1rem;
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #4ad7d1;
+  height: 2rem;
+}
+
+.footer ul li {
+  list-style-type: none;
 }
