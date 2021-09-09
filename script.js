@@ -36,7 +36,7 @@ let renderHeader = () => {
   searchBox.className = "search-box";
   searchBox.type = "text";
   selector.ariaLabel = "search";
-  searchBox.placeholder = " Episode Search...";
+  searchBox.placeholder = " Episode search...";
 
   let searchEpisodes = document.querySelector("#search-box");
   searchEpisodes.addEventListener("keyup", () => {
@@ -140,7 +140,7 @@ let renderFooter = () => {
   rootElem.appendChild(footer);
   footer.className = "footer";
   footer.innerHTML =
-    "<ul><li>All episode data from: <a href='https://www.tvmaze.com/api#licensing'>TVMaze.com</a></li></ul>";
+    "<ul><li>All episode data from: <a href='https://www.tvmaze.com/api#licensing' target='Blank'>TVMaze.com</a></li></ul>";
 };
 
 // Format and return an episode code, format `S01E01`.
