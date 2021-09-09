@@ -15,7 +15,6 @@
   color: #fff;
   text-shadow: 0px 2px 3px rgb(255, 255, 255, 0.5);
   margin-bottom: 0.5rem;
-  border-bottom: 4px solid #b48c36;
   box-shadow: 0px 0px 5px 0px #b48c36;
 }
 
@@ -37,8 +36,9 @@
   margin: 0 0 0.5rem 1rem;
   color: #fff;
   background-color: #040404;
-  border: 2px groove #b48c36;
+  border: 0;
   border-radius: 8px;
+  background-color: #292727;
 }
 
 .episode-list-container {
@@ -54,8 +54,8 @@
 .select-menu:hover,
 .select-menu:focus {
   outline: none;
-  border: 2px groove #d8ab4e;
   cursor: pointer;
+  background-color: #292727c4;
 }
 
 .search-box {
@@ -67,11 +67,12 @@
 .search-box:hover,
 .search-box:focus {
   outline: none;
-  border: 2px groove #d8ab4e;
+  background-color: #292727c4;
 }
 
 .display-status {
   padding: 1rem;
+  font-size: 0.9rem;
 }
 
 .back-button {
@@ -82,7 +83,7 @@
 .back-button:hover,
 .back-button:focus {
   cursor: pointer;
-  border: 2px groove #d8ab4e;
+  outline: none;
   box-shadow: inset 0 0 30px #040404;
   background: #b48c36;
 }
@@ -93,10 +94,9 @@
   width: 20rem;
   height: 33rem;
   margin: 0.5rem;
-  border-radius: 0.5rem;
+  border-radius: 8px;
   background-color: #fff;
   box-shadow: 0px 0px 5px 0px #b48c36;
-  border: 3px groove #d8ab4e;
 }
 
 .episode-card > div:first-of-type {
@@ -104,7 +104,7 @@
   background-color: #040404;
   color: #d8ab4e;
   text-shadow: 0px 2px 3px rgba(180, 140, 54, 0.5);
-  border-bottom: 3px solid #b48c36;
+  border-bottom: 4px solid #b48c36;
 }
 .episode-card > h2,
 .episode-card > div:first-of-type {

@@ -103,7 +103,6 @@ let renderEpisodeCards = (episodeList) => {
 
   // Iterate through `episodeList` and render episode cards and add event listeners for TVMaze episode info.
   episodeList.forEach((episode) => {
-    console.log(episode);
     let card = document.createElement("article");
     episodeListContainer.appendChild(card);
     card.className = "episode-card";
