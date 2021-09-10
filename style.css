@@ -71,6 +71,10 @@
   background-color: #292727c4;
 }
 
+::placeholder {
+  opacity: 1;
+}
+
 .display-status {
   padding: 1rem;
   font-size: 0.9rem;
@@ -128,7 +132,7 @@
 .episode-card:focus {
   cursor: pointer;
   box-shadow: 0px 0px 5px 0px #3f2b03;
-  border-radius: 20px 8px 20px 8px;
+  border-radius: 25px 8px 25px 8px;
 }
 
 .footer {
