@@ -48,7 +48,8 @@
 }
 
 .select-menu {
-  height: 2.2rem;
+  height: 1.9rem;
+  width: 11rem;
 }
 
 .select-menu:hover,
@@ -59,7 +60,7 @@
 }
 
 .search-box {
-  height: 1.9rem;
+  height: 1.7rem;
   width: 11rem;
   cursor: text;
 }
@@ -76,8 +77,8 @@
 }
 
 .back-button {
-  height: 2.2rem;
-  width: 15rem;
+  height: 1.9rem;
+  width: 11rem;
 }
 
 .back-button:hover,

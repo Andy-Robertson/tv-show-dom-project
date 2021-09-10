@@ -58,6 +58,11 @@ let renderEpisodeSelectorList = () => {
   let select = document.getElementById("select-menu");
   let episodeTitle = document.getElementById("episode-title-container");
 
+  let defaultOption = document.createElement("option");
+  select.appendChild(defaultOption);
+  defaultOption.innerText = "Select an episode...";
+  defaultOption.selected; // technically not needed but added to be concise.
+
   const allEpisodes = getAllEpisodes();
   allEpisodes.forEach((episode) => {
     let option = document.createElement("option");
