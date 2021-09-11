@@ -1,21 +1,21 @@
 // Loads page.
 let setup = () => {
+  header.replaceChildren();
   const allEpisodes = getAllEpisodes();
-  renderHeader();
+  renderHeader(allEpisodes);
+  renderEpisodeListContainer();
   renderEpisodeCards(allEpisodes);
   renderFooter();
 };
 
 // Render header elements and adds search box event listener.
-let renderHeader = () => {
-  const allEpisodes = getAllEpisodes();
-
+let renderHeader = (allEpisodes) => {
   let header = document.getElementById("header");
-  let episodeTitleContainer = document.createElement("div");
-  header.appendChild(episodeTitleContainer);
-  episodeTitleContainer.id = "episode-title-container";
-  episodeTitleContainer.className = "episode-title-container";
-  episodeTitleContainer.innerText = "TV Show Project 300";
+  let infoContainer = document.createElement("div");
+  header.appendChild(infoContainer);
+  infoContainer.id = "info-container";
+  infoContainer.className = "info-container";
+  infoContainer.innerText = "TV Show Project 300";
 
   let navigationContainer = document.createElement("div");
   header.appendChild(navigationContainer);
@@ -39,9 +39,9 @@ let renderHeader = () => {
   searchBox.placeholder = " Episode search...";
 
   let searchEpisodes = document.querySelector("#search-box");
-  searchEpisodes.addEventListener("keyup", () => {
-    searchAllEpisodes();
-  });
+  searchEpisodes.addEventListener("keyup", () =>
+    searchAllEpisodes(searchEpisodes.value)
+  );
 
   let displayNumberOfEpisodes = document.createElement("span");
   navigationContainer.appendChild(displayNumberOfEpisodes);
@@ -51,12 +51,9 @@ let renderHeader = () => {
 };
 
 // Dynamically renders episodes in selector list and adds an event listener to the `select` element.
-// Originally I attached a "click" listener to each `option` using the loop which worked in Firefox but it didn't work in chrome
-// so the workaround I found was to use "change" on the `select` element and pass the `selector.value` instead of the `episode.name`
-// As the `selector.value` is equal to `episode.name` I think(hope) this is ok to pull the data from the DOM and not directly from the object???
 let renderEpisodeSelectorList = () => {
   let select = document.getElementById("select-menu");
-  let episodeTitle = document.getElementById("episode-title-container");
+  let infoContainer = document.getElementById("info-container");
 
   let defaultOption = document.createElement("option");
   select.appendChild(defaultOption);
@@ -74,16 +71,16 @@ let renderEpisodeSelectorList = () => {
 
   let selector = document.getElementById("select-menu");
   selector.addEventListener("change", () => {
-    searchForSelectedEpisode(selector.value);
+    searchAllEpisodes(selector.value);
     renderBackButton();
-    episodeTitle.innerText = `Game of Thrones`;
+    infoContainer.innerText = `Game of Thrones`;
   });
 };
 
 // Renders back navigation button and adds event listener
 let renderBackButton = () => {
   let navigationContainer = document.getElementById("navigation-container");
-  navigationContainer.replaceChildren([]);
+  navigationContainer.replaceChildren();
 
   let button = document.createElement("button");
   navigationContainer.appendChild(button);
@@ -91,20 +88,23 @@ let renderBackButton = () => {
   button.className = "back-button";
   button.innerText = "Back to Library";
 
-  button.addEventListener("click", () => {
-    header.replaceChildren([]);
-    setup();
-  });
+  button.addEventListener("click", () => setup());
+};
+
+// Render remove all child elements of `root` and renders the `episodeListContainer`
+let renderEpisodeListContainer = () => {
+  const rootElem = document.getElementById("root");
+  rootElem.replaceChildren();
+
+  let episodeListContainer = document.createElement("div");
+  rootElem.appendChild(episodeListContainer);
+  episodeListContainer.id = "episode-list-container";
+  episodeListContainer.className = "episode-list-container";
 };
 
 // Renders all episode elements stored in `allEpisodes`.
 let renderEpisodeCards = (episodeList) => {
-  const rootElem = document.getElementById("root");
-  rootElem.replaceChildren([]);
-
-  let episodeListContainer = document.createElement("div");
-  rootElem.appendChild(episodeListContainer);
-  episodeListContainer.className = "episode-list-container";
+  let episodeListContainer = document.getElementById("episode-list-container");
 
   // Iterate through `episodeList` and render episode cards and add event listeners for TVMaze episode info.
   episodeList.forEach((episode) => {
@@ -112,9 +112,7 @@ let renderEpisodeCards = (episodeList) => {
     episodeListContainer.appendChild(card);
     card.className = "episode-card";
 
-    card.addEventListener("click", () => {
-      parent.open(episode.url);
-    });
+    card.addEventListener("click", () => parent.open(episode.url));
 
     let cardTitle = document.createElement("h2");
     card.appendChild(cardTitle);
@@ -149,38 +147,35 @@ let renderFooter = () => {
 
 // Format and return an episode code, format `S01E01`.
 let getEpisodeCode = (episode) => {
-  let code = "";
-  if (episode.season <= 10) {
-    code += `S${episode.season.toString().padStart(2, "0")}`;
+  let formattedEpisodeCode = "";
+
+  if (episode.season < 10) {
+    formattedEpisodeCode += `S${episode.season.toString().padStart(2, "0")}`;
+  } else {
+    formattedEpisodeCode += `S${episode.season.toString()}`;
   }
-  if (episode.number <= 10) {
-    code += `E${episode.number.toString().padStart(2, "0")}`;
+
+  if (episode.number < 10) {
+    formattedEpisodeCode += `E${episode.number.toString().padStart(2, "0")}`;
+  } else {
+    formattedEpisodeCode += `E${episode.number.toString()}`;
   }
-  return code;
+  return formattedEpisodeCode;
 };
 
-// Search `allEpisodes` using the input vale at `#searchBox`, case insensitive,
-// calls render function and updates number of filtered episodes.
-let searchAllEpisodes = () => {
-  let searchEpisodes = document.querySelector("#search-box");
+// Search `allEpisodes` using the input value at `#searchBox` or episode selector, case insensitive,
+let searchAllEpisodes = (value) => {
   const allEpisodes = getAllEpisodes();
   let filteredEpisodes = allEpisodes.filter((episode) => {
-    return episode.name
-      .toUpperCase()
-      .includes(searchEpisodes.value.toUpperCase());
+    return episode.name.toUpperCase().includes(value.toUpperCase());
   });
-  renderEpisodeCards(filteredEpisodes);
-  renderNumberOfEpisodes(filteredEpisodes.length, allEpisodes.length);
+  updateDisplayedEpisodes(filteredEpisodes);
 };
 
-// Search `allEpisodes` for selected episode
-// calls render function and updates number of filtered episodes.
-let searchForSelectedEpisode = (value) => {
+// Updates the displayed episodes depending on search or selected episode.
+let updateDisplayedEpisodes = (filteredEpisodes) => {
   const allEpisodes = getAllEpisodes();
-  let filteredEpisodes = allEpisodes.filter((episode) => {
-    return episode.name === value;
-  });
-
+  renderEpisodeListContainer();
   renderEpisodeCards(filteredEpisodes);
   renderNumberOfEpisodes(filteredEpisodes.length, allEpisodes.length);
 };
