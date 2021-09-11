@@ -40,7 +40,7 @@ let renderHeader = (allEpisodes) => {
 
   let searchEpisodes = document.querySelector("#search-box");
   searchEpisodes.addEventListener("keyup", () =>
-    searchAllEpisodes(searchEpisodes.value)
+    searchAllEpisodes(searchEpisodes.value, allEpisodes)
   );
 
   let displayNumberOfEpisodes = document.createElement("span");
@@ -71,7 +71,7 @@ let renderEpisodeSelectorList = () => {
 
   let selector = document.getElementById("select-menu");
   selector.addEventListener("change", () => {
-    searchAllEpisodes(selector.value);
+    searchAllEpisodes(selector.value, allEpisodes);
     renderBackButton();
     infoContainer.innerText = `Game of Thrones`;
   });
@@ -164,8 +164,7 @@ let getEpisodeCode = (episode) => {
 };
 
 // Search `allEpisodes` using the input value at `#searchBox` or episode selector, case insensitive,
-let searchAllEpisodes = (value) => {
-  const allEpisodes = getAllEpisodes();
+let searchAllEpisodes = (value, allEpisodes) => {
   let filteredEpisodes = allEpisodes.filter((episode) => {
     return episode.name.toUpperCase().includes(value.toUpperCase());
   });
