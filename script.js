@@ -1,7 +1,22 @@
-// Loads page.
-let setup = () => {
+// Stores all episode data from `fetch()`.
+// This is necessary to ensure that the API data is only pulled once from TVMaze ensuring efficiency.
+let allEpisodes = {};
+
+// Gets all episode data from the TVMaze API, stores the result in `allEpisodes` variable and starts the page
+// load when complete by calling `setup()`.
+let getEpisodeLibrary = () => {
+  fetch("https://api.tvmaze.com/shows/82/episodes")
+    .then((response) => response.json())
+    .then((episodes) => {
+      (allEpisodes = episodes), setup(allEpisodes);
+    })
+    .catch((error) => console.log(error));
+};
+
+// Loads page using content pulled from the TVMaze API.
+let setup = (allEpisodes) => {
   header.replaceChildren();
-  const allEpisodes = getAllEpisodes();
+
   renderHeader(allEpisodes);
   renderEpisodeListContainer();
   renderEpisodeCards(allEpisodes);
@@ -15,7 +30,7 @@ let renderHeader = (allEpisodes) => {
   header.appendChild(infoContainer);
   infoContainer.id = "info-container";
   infoContainer.className = "info-container";
-  infoContainer.innerText = "TV Show Project 300";
+  infoContainer.innerText = "TV Show Project 350";
 
   let navigationContainer = document.createElement("div");
   header.appendChild(navigationContainer);
@@ -28,7 +43,7 @@ let renderHeader = (allEpisodes) => {
   selector.className = "select-menu";
   selector.name = "select-menu";
   selector.ariaLabel = "Select episode";
-  renderEpisodeSelectorList();
+  renderEpisodeSelectorList(allEpisodes);
 
   let searchBox = document.createElement("input");
   navigationContainer.appendChild(searchBox);
@@ -51,16 +66,15 @@ let renderHeader = (allEpisodes) => {
 };
 
 // Dynamically renders episodes in selector list and adds an event listener to the `select` element.
-let renderEpisodeSelectorList = () => {
+let renderEpisodeSelectorList = (allEpisodes) => {
   let select = document.getElementById("select-menu");
   let infoContainer = document.getElementById("info-container");
 
   let defaultOption = document.createElement("option");
   select.appendChild(defaultOption);
   defaultOption.innerText = "Select an episode...";
-  defaultOption.selected; // technically not needed but added to be concise.
+  defaultOption.selected; // Technically not needed but added to be concise.
 
-  const allEpisodes = getAllEpisodes();
   allEpisodes.forEach((episode) => {
     let option = document.createElement("option");
     select.appendChild(option);
@@ -77,7 +91,7 @@ let renderEpisodeSelectorList = () => {
   });
 };
 
-// Renders back navigation button and adds event listener
+// Renders back navigation button and adds event listener.
 let renderBackButton = () => {
   let navigationContainer = document.getElementById("navigation-container");
   navigationContainer.replaceChildren();
@@ -88,10 +102,10 @@ let renderBackButton = () => {
   button.className = "back-button";
   button.innerText = "Back to Library";
 
-  button.addEventListener("click", () => setup());
+  button.addEventListener("click", () => setup(allEpisodes));
 };
 
-// Render remove all child elements of `root` and renders the `episodeListContainer`
+// Render remove all child elements of `root` and renders the `episodeListContainer`.
 let renderEpisodeListContainer = () => {
   const rootElem = document.getElementById("root");
   rootElem.replaceChildren();
@@ -163,17 +177,16 @@ let getEpisodeCode = (episode) => {
   return formattedEpisodeCode;
 };
 
-// Search `allEpisodes` using the input value at `#searchBox` or episode selector, case insensitive,
+// Search `allEpisodes` using the input value at `#searchBox` or episode selector, case insensitive.
 let searchAllEpisodes = (value, allEpisodes) => {
   let filteredEpisodes = allEpisodes.filter((episode) => {
     return episode.name.toUpperCase().includes(value.toUpperCase());
   });
-  updateDisplayedEpisodes(filteredEpisodes);
+  updateDisplayedEpisodes(filteredEpisodes, allEpisodes);
 };
 
 // Updates the displayed episodes depending on search or selected episode.
-let updateDisplayedEpisodes = (filteredEpisodes) => {
-  const allEpisodes = getAllEpisodes();
+let updateDisplayedEpisodes = (filteredEpisodes, allEpisodes) => {
   renderEpisodeListContainer();
   renderEpisodeCards(filteredEpisodes);
   renderNumberOfEpisodes(filteredEpisodes.length, allEpisodes.length);
@@ -185,4 +198,5 @@ let renderNumberOfEpisodes = (numberOfFilteredEpisodes, numberOfEpisodes) => {
   displayNumberOfEpisodes.innerText = `Displaying: ${numberOfFilteredEpisodes} / ${numberOfEpisodes} episodes.`;
 };
 
-window.onload = setup;
+// Pulls data from TVWiz API then loads the page.
+window.onload = getEpisodeLibrary();
