@@ -1,14 +1,24 @@
-// Stores all episode data from `fetch()`.
-// This is necessary to ensure that the API data is only pulled once from TVMaze ensuring efficiency.
-let allEpisodes = {};
+// Global variables to store episode and show data.
+let allSeries = getAllShows();
+let allEpisodes = [];
+let seriesID = 82; // Game of Thrones
 
-// Gets all episode data from the TVMaze API, stores the result in `allEpisodes` variable and starts the page
+// Gets all episode data from the TVMaze API, stores the result in `allEpisodes` global variable and starts the page
 // load when complete by calling `setup()`.
 let getEpisodeLibrary = () => {
-  fetch("https://api.tvmaze.com/shows/82/episodes")
-    .then((response) => response.json())
+  fetch(`https://api.tvmaze.com/shows/${seriesID}/episodes`)
+    .then((response) => {
+      if (response.status >= 200 && response.status <= 299) {
+        return response.json();
+      } else {
+        throw new Error(
+          `Unexpected Error: ${response.status} ${response.statusText}`
+        );
+      }
+    })
     .then((episodes) => {
-      (allEpisodes = episodes), setup(allEpisodes);
+      allEpisodes = episodes;
+      setup(allEpisodes);
     })
     .catch((error) => console.log(error));
 };
@@ -30,19 +40,27 @@ let renderHeader = (allEpisodes) => {
   header.appendChild(infoContainer);
   infoContainer.id = "info-container";
   infoContainer.className = "info-container";
-  infoContainer.innerText = "TV Show Project 350";
+  infoContainer.innerText = "TV Show Project 400";
 
   let navigationContainer = document.createElement("div");
   header.appendChild(navigationContainer);
   navigationContainer.id = "navigation-container";
   navigationContainer.className = "navigation-container";
 
-  let selector = document.createElement("select");
-  navigationContainer.appendChild(selector);
-  selector.id = "select-menu";
-  selector.className = "select-menu";
-  selector.name = "select-menu";
-  selector.ariaLabel = "Select episode";
+  let seriesSelector = document.createElement("select");
+  navigationContainer.appendChild(seriesSelector);
+  seriesSelector.id = "series-select-menu";
+  seriesSelector.className = "select-menu";
+  seriesSelector.name = "series-select-menu";
+  seriesSelector.ariaLabel = "Select episode";
+  renderSeriesSelectorList(allSeries);
+
+  let episodeSelector = document.createElement("select");
+  navigationContainer.appendChild(episodeSelector);
+  episodeSelector.id = "episode-select-menu";
+  episodeSelector.className = "select-menu";
+  episodeSelector.name = "episode-select-menu";
+  episodeSelector.ariaLabel = "Select episode";
   renderEpisodeSelectorList(allEpisodes);
 
   let searchBox = document.createElement("input");
@@ -50,7 +68,7 @@ let renderHeader = (allEpisodes) => {
   searchBox.id = "search-box";
   searchBox.className = "search-box";
   searchBox.type = "text";
-  selector.ariaLabel = "search";
+  searchBox.ariaLabel = "search";
   searchBox.placeholder = " Episode search...";
 
   let searchEpisodes = document.querySelector("#search-box");
@@ -67,27 +85,63 @@ let renderHeader = (allEpisodes) => {
 
 // Dynamically renders episodes in selector list and adds an event listener to the `select` element.
 let renderEpisodeSelectorList = (allEpisodes) => {
-  let select = document.getElementById("select-menu");
+  let episodeSelector = document.getElementById("episode-select-menu");
   let infoContainer = document.getElementById("info-container");
 
-  let defaultOption = document.createElement("option");
-  select.appendChild(defaultOption);
-  defaultOption.innerText = "Select an episode...";
-  defaultOption.selected; // Technically not needed but added to be concise.
+  let defaultEpisodeOption = document.createElement("option");
+  episodeSelector.appendChild(defaultEpisodeOption);
+  defaultEpisodeOption.innerText = "Select an episode...";
+  defaultEpisodeOption.selected;
 
   allEpisodes.forEach((episode) => {
     let option = document.createElement("option");
-    select.appendChild(option);
+    episodeSelector.appendChild(option);
     let episodeCode = getEpisodeCode(episode);
     option.value = episode.name;
     option.innerText = `${episodeCode} - ${episode.name}`;
   });
 
-  let selector = document.getElementById("select-menu");
-  selector.addEventListener("change", () => {
-    searchAllEpisodes(selector.value, allEpisodes);
+  episodeSelector.addEventListener("change", () => {
+    searchAllEpisodes(episodeSelector.value, allEpisodes);
     renderBackButton();
-    infoContainer.innerText = `Game of Thrones`;
+  });
+};
+
+// Dynamically renders `seriesSelector` list
+let renderSeriesSelectorList = () => {
+  let seriesSelector = document.getElementById("series-select-menu");
+
+  let defaultSeriesOption = document.createElement("option");
+  seriesSelector.appendChild(defaultSeriesOption);
+  defaultSeriesOption.innerText = "Select a series...";
+  defaultSeriesOption.selected;
+
+  getSortedSeries(allSeries).forEach((series) => {
+    let option = document.createElement("option");
+    seriesSelector.appendChild(option);
+    option.value = series.id;
+    option.innerText = `${series.name}`;
+  });
+
+  seriesSelector.addEventListener("change", () => {
+    seriesID = seriesSelector.value;
+    getEpisodeLibrary();
+  });
+};
+
+// Sorts series list
+let getSortedSeries = (allSeries) => {
+  return allSeries.sort((a, b) => {
+    const nameA = a.name.toUpperCase();
+    const nameB = b.name.toUpperCase();
+
+    let comparison = 0;
+    if (nameA > nameB) {
+      comparison = 1;
+    } else if (nameA < nameB) {
+      comparison = -1;
+    }
+    return comparison;
   });
 };
 
