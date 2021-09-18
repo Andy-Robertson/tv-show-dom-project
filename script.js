@@ -100,13 +100,13 @@ let renderEpisodeSearchBox = () => {
   let navigationContainer = document.getElementById("navigation-container");
   let searchBox = document.createElement("input");
   navigationContainer.appendChild(searchBox);
-  searchBox.id = "search-box";
+  searchBox.id = "episode-search-box";
   searchBox.className = "search-box";
   searchBox.type = "text";
   searchBox.ariaLabel = "search";
   searchBox.placeholder = " Episode search...";
 
-  let searchEpisodes = document.querySelector("#search-box");
+  let searchEpisodes = document.querySelector("#episode-search-box");
   searchEpisodes.addEventListener("keyup", () =>
     searchAllEpisodes(searchEpisodes.value, allEpisodes, searchBox.id)
   );
@@ -146,8 +146,8 @@ let renderNumberOfEpisodes = () => {
   let navigationContainer = document.getElementById("navigation-container");
   let displayNumberOfEpisodes = document.createElement("span");
   navigationContainer.appendChild(displayNumberOfEpisodes);
-  displayNumberOfEpisodes.id = "display-status";
-  displayNumberOfEpisodes.className = "display-status";
+  displayNumberOfEpisodes.id = "episodes-displayed";
+  displayNumberOfEpisodes.className = "cards-displayed";
   updateNumberOfEpisodes(allEpisodes.length, allEpisodes.length);
 };
 
@@ -156,8 +156,8 @@ let renderNumberOfShowsFound = () => {
   let navigationContainer = document.getElementById("navigation-container");
   let displayNumberOfShowsFound = document.createElement("span");
   navigationContainer.appendChild(displayNumberOfShowsFound);
-  displayNumberOfShowsFound.id = "display-status";
-  displayNumberOfShowsFound.className = "display-status";
+  displayNumberOfShowsFound.id = "shows-displayed";
+  displayNumberOfShowsFound.className = "cards-displayed";
   updateNumberOfShowsFound(allShows.length);
 };
 
@@ -288,14 +288,14 @@ let renderAllShows = (allShows) => {
       infoContainer.innerText = show.name;
     });
 
-   let cardTitle = document.createElement("h2");
-   card.appendChild(cardTitle);
-   cardTitle.innerText = show.name;
+    let cardTitle = document.createElement("h2");
+    card.appendChild(cardTitle);
+    cardTitle.innerText = show.name;
 
     let showContentContainer = document.createElement("div");
     card.appendChild(showContentContainer);
     showContentContainer.id = "show-content-container";
-    showContentContainer.className = "show-content-container"; ////
+    showContentContainer.className = "show-content-container";
 
     let img = document.createElement("img");
     showContentContainer.appendChild(img);
@@ -334,6 +334,10 @@ let renderAllShows = (allShows) => {
     let showRuntime = document.createElement("li");
     ul.appendChild(showRuntime);
     showRuntime.innerText = `Runtime: ${show.runtime}`;
+
+    let premiered = document.createElement("li");
+    ul.appendChild(premiered);
+    premiered.innerText = `Premiered: ${show.premiered}`;
   });
 };
 
@@ -388,13 +392,13 @@ let renderFooter = () => {
 // Sorts show list alphabetically.
 let getSortedShow = (shows) => {
   return shows.sort((a, b) => {
-    const nameA = a.name.toUpperCase();
-    const nameB = b.name.toUpperCase();
+    const showA = a.name.toUpperCase();
+    const showB = b.name.toUpperCase();
 
     let comparison = 0;
-    if (nameA > nameB) {
+    if (showA > showB) {
       comparison = 1;
-    } else if (nameA < nameB) {
+    } else if (showA < showB) {
       comparison = -1;
     }
     return comparison;
@@ -422,7 +426,7 @@ let getEpisodeCode = (episode) => {
 // Searches `allEpisodes` using the input value at `#search-box` and the selector `#episode-select-menu`, case insensitive.
 let searchAllEpisodes = (value, allEpisodes, iD) => {
   let filteredEpisodes = allEpisodes.filter((episode) => {
-    if (iD === "search-box") {
+    if (iD === "episode-search-box") {
       return episode.name.toUpperCase().includes(value.toUpperCase());
     } else {
       return episode.name.toUpperCase() === value.toUpperCase();
@@ -462,13 +466,13 @@ let updateDisplayedShows = (filteredShows) => {
 
 // Updates the number of episodes being viewed.
 let updateNumberOfEpisodes = (numberOfFilteredEpisodes, numberOfEpisodes) => {
-  let displayNumberOfEpisodes = document.getElementById("display-status");
+  let displayNumberOfEpisodes = document.getElementById("episodes-displayed");
   displayNumberOfEpisodes.innerText = `${numberOfFilteredEpisodes} / ${numberOfEpisodes} episodes.`;
 };
 
 // Updates the number of shows found.
 let updateNumberOfShowsFound = (numberOfShows) => {
-  let displayNumberOfShows = document.getElementById("display-status");
+  let displayNumberOfShows = document.getElementById("shows-displayed");
   displayNumberOfShows.innerText = `Found ${numberOfShows} shows.`;
 };
 

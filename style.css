@@ -82,7 +82,7 @@
   opacity: 1;
 }
 
-.display-status {
+.cards-displayed {
   padding: 1rem;
   font-size: 0.9rem;
 }
@@ -139,7 +139,7 @@
 }
 
 .show-info-container > ul > li {
-  padding: 1rem 0 1rem 0;
+  padding: 1.15rem 0 1.15rem 0;
   list-style: none;
   font-size: 0.9rem;
 }
