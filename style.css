@@ -42,7 +42,7 @@
 .back-button {
   margin: 0 0 0.5rem 1rem;
   color: #fff;
-  background-color: #292727;
+  background-color: #3b3939;
   border: 0;
   border-radius: 8px;
 }
@@ -104,30 +104,35 @@
 
 .show-list-container {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 
 .show-card {
   display: flex;
-  justify-content: center;
-  width: 85%;
-  height: 25rem;
+  flex-direction: column;
+  width: 88%;
   margin: 0.5rem;
+  padding-bottom: 4rem;
   border-radius: 8px;
   background-color: #fff;
   box-shadow: 0px 0px 5px 0px #b48c36;
 }
 
+.show-card > h2 {
+  padding-left: 1rem;
+  text-shadow: 0px 2px 3px rgba(4, 4, 4, 0.24);
+  margin-bottom: 2rem;
+}
+
 .show-info-container > ul {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
   background-color: #d8aa4e13;
   padding: 0 1rem 0 1rem;
-  width: 16rem;
+  width: 20rem;
   height: 17rem;
-  margin: 4.1rem 1rem 0 1rem;
+  margin: 0 1rem 0 1rem;
   border-radius: 8px;
   box-shadow: 0px 0px 5px 0px #b48c36;
   text-shadow: 0px 1px 2px rgba(4, 4, 4, 0.295);
@@ -139,23 +144,21 @@
   font-size: 0.9rem;
 }
 
-.overview-container > div {
+.show-content-container {
   display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
 
-.overview-container > h2 {
-  padding-left: 1rem;
-  text-shadow: 0px 2px 3px rgba(4, 4, 4, 0.5);
+.show-content-container > img {
+  width: 14rem;
+  padding: 0 1rem 1rem 1rem;
 }
 
-.overview-container > div > img {
-  width: 12rem;
-  padding: 0 1rem 0 1rem;
-}
-
-.overview-container > div > p {
+.show-content-container > div > p {
   margin: 0;
-  padding: 0 1rem 0 1rem;
+  padding: 0 1rem 1rem 1rem;
+  max-width: 40rem;
 }
 
 /* ------------------] EPISODE CARD SECTION [------------------ */

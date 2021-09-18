@@ -38,7 +38,7 @@ let setup = () => {
 // Renders all shows pulled using the `getAllShows` function and sets the page title.
 let renderShowsPage = () => {
   let infoContainer = document.getElementById("info-container");
-  infoContainer.innerText = "TV Show Project 500+";
+  infoContainer.innerText = "TV Show Project";
 
   renderShowPageHeaderInteractables();
   renderShowListContainer();
@@ -206,7 +206,7 @@ let renderShowSelectorList = (shows) => {
   showSelector.addEventListener("change", () => {
     getEpisodeLibrary(showSelector.value);
     let infoContainer = document.getElementById("info-container");
-    infoContainer.innerText = "TV Show Project 500+";
+    infoContainer.innerText = "TV Show Project";
   });
 };
 
@@ -288,20 +288,17 @@ let renderAllShows = (allShows) => {
       infoContainer.innerText = show.name;
     });
 
-    let overviewContainer = document.createElement("div");
-    card.appendChild(overviewContainer);
-    overviewContainer.id = "overview-container";
-    overviewContainer.className = "overview-container";
+   let cardTitle = document.createElement("h2");
+   card.appendChild(cardTitle);
+   cardTitle.innerText = show.name;
 
-    let cardTitle = document.createElement("h2");
-    overviewContainer.appendChild(cardTitle);
-    cardTitle.innerText = show.name;
-
-    let imgAndParagraphContainer = document.createElement("div");
-    overviewContainer.appendChild(imgAndParagraphContainer);
+    let showContentContainer = document.createElement("div");
+    card.appendChild(showContentContainer);
+    showContentContainer.id = "show-content-container";
+    showContentContainer.className = "show-content-container"; ////
 
     let img = document.createElement("img");
-    imgAndParagraphContainer.appendChild(img);
+    showContentContainer.appendChild(img);
 
     show.image === null
       ? (img.src = "img/image-not-found.jpg")
@@ -311,11 +308,11 @@ let renderAllShows = (allShows) => {
     img.title = show.name;
 
     let summary = document.createElement("div");
-    imgAndParagraphContainer.appendChild(summary);
+    showContentContainer.appendChild(summary);
     summary.innerHTML = show.summary;
 
     let showInfoContainer = document.createElement("div");
-    card.appendChild(showInfoContainer);
+    showContentContainer.appendChild(showInfoContainer);
     showInfoContainer.id = "show-info-container";
     showInfoContainer.className = "show-info-container";
 
@@ -466,7 +463,7 @@ let updateDisplayedShows = (filteredShows) => {
 // Updates the number of episodes being viewed.
 let updateNumberOfEpisodes = (numberOfFilteredEpisodes, numberOfEpisodes) => {
   let displayNumberOfEpisodes = document.getElementById("display-status");
-  displayNumberOfEpisodes.innerText = `Displaying: ${numberOfFilteredEpisodes} / ${numberOfEpisodes} episodes.`;
+  displayNumberOfEpisodes.innerText = `${numberOfFilteredEpisodes} / ${numberOfEpisodes} episodes.`;
 };
 
 // Updates the number of shows found.
