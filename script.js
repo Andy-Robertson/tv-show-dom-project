@@ -108,7 +108,7 @@ let renderEpisodeSearchBox = () => {
 
   let searchEpisodes = document.querySelector("#search-box");
   searchEpisodes.addEventListener("keyup", () =>
-    searchAllEpisodes(searchEpisodes.value, allEpisodes)
+    searchAllEpisodes(searchEpisodes.value, allEpisodes, searchBox.id)
   );
 };
 
@@ -179,7 +179,7 @@ let renderEpisodeSelectorList = (allEpisodes) => {
   });
 
   episodeSelector.addEventListener("change", () => {
-    searchAllEpisodes(episodeSelector.value, allEpisodes);
+    searchAllEpisodes(episodeSelector.value, allEpisodes, episodeSelector.iD);
     renderBackButton();
   });
 };
@@ -199,7 +199,7 @@ let renderShowSelectorList = (shows) => {
   if (shows < allShows.length) {
     let defaultShowOption = document.createElement("option");
     showSelector.appendChild(defaultShowOption);
-    defaultShowOption.innerText = "Not in database";
+    defaultShowOption.innerText = "Not in database!";
     defaultShowOption.selected;
   }
 
@@ -422,10 +422,14 @@ let getEpisodeCode = (episode) => {
   return formattedEpisodeCode;
 };
 
-// Searches `allEpisodes` using the input value at `#search-box`, case insensitive.
-let searchAllEpisodes = (value, allEpisodes) => {
+// Searches `allEpisodes` using the input value at `#search-box` and the selector `#episode-select-menu`, case insensitive.
+let searchAllEpisodes = (value, allEpisodes, iD) => {
   let filteredEpisodes = allEpisodes.filter((episode) => {
-    return episode.name.toUpperCase().includes(value.toUpperCase());
+    if (iD === "search-box") {
+      return episode.name.toUpperCase().includes(value.toUpperCase());
+    } else {
+      return episode.name.toUpperCase() === value.toUpperCase();
+    }
   });
   updateDisplayedEpisodes(filteredEpisodes, allEpisodes);
 };
