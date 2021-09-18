@@ -1,3 +1,5 @@
+/* -------------------] GENERIC SECTION [------------------- */
+
 @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Source+Sans+Pro&display=swap");
 
 .root {
@@ -8,6 +10,9 @@
 .body {
   background-color: #ece5d5;
 }
+
+/* --------------------] HEADER SECTION [------------------- */
+
 .header {
   display: flex;
   flex-direction: column;
@@ -26,6 +31,8 @@
   font-size: 2rem;
 }
 
+/* ------------------] NAVIGATION SECTION [------------------ */
+
 .navigation-container {
   padding-bottom: 0.5rem;
 }
@@ -40,12 +47,6 @@
   border-radius: 8px;
 }
 
-.episode-list-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
 .select-menu {
   height: 1.9rem;
   width: 11.1rem;
@@ -56,6 +57,10 @@
   outline: none;
   cursor: pointer;
   background-color: #292727c4;
+  cursor: pointer;
+  outline: none;
+  box-shadow: inset 0 0 30px #040404;
+  background: #b48c36;
 }
 
 .search-box {
@@ -67,7 +72,10 @@
 .search-box:hover,
 .search-box:focus {
   outline: none;
-  background-color: #292727c4;
+  cursor: pointer;
+  outline: none;
+  box-shadow: inset 0 0 30px #040404;
+  background: #b48c36;
 }
 
 ::placeholder {
@@ -90,6 +98,72 @@
   outline: none;
   box-shadow: inset 0 0 30px #040404;
   background: #b48c36;
+}
+
+/* ------------------] SHOW CARD SECTION [------------------ */
+
+.show-list-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.show-card {
+  display: flex;
+  justify-content: center;
+  width: 85%;
+  height: 25rem;
+  margin: 0.5rem;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0px 0px 5px 0px #b48c36;
+}
+
+.show-info-container > ul {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  background-color: #d8aa4e13;
+  padding: 0 1rem 0 1rem;
+  width: 16rem;
+  height: 17rem;
+  margin: 4.1rem 1rem 0 1rem;
+  border-radius: 8px;
+  box-shadow: 0px 0px 5px 0px #b48c36;
+  text-shadow: 0px 1px 2px rgba(4, 4, 4, 0.295);
+}
+
+.show-info-container > ul > li {
+  padding: 1rem 0 1rem 0;
+  list-style: none;
+  font-size: 0.9rem;
+}
+
+.overview-container > div {
+  display: flex;
+}
+
+.overview-container > h2 {
+  padding-left: 1rem;
+  text-shadow: 0px 2px 3px rgba(4, 4, 4, 0.5);
+}
+
+.overview-container > div > img {
+  width: 12rem;
+  padding: 0 1rem 0 1rem;
+}
+
+.overview-container > div > p {
+  margin: 0;
+  padding: 0 1rem 0 1rem;
+}
+
+/* ------------------] EPISODE CARD SECTION [------------------ */
+
+.episode-list-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .episode-card {
@@ -128,12 +202,16 @@
 }
 
 .episode-card:hover,
-.episode-card:focus {
+.episode-card:focus,
+.show-card:hover,
+.show-card:focus {
   cursor: pointer;
   box-shadow: 0px 0px 5px 0px #3f2b03;
   border-radius: 25px 8px 25px 8px;
   transition: box-shadow 0.8s;
 }
+
+/* ------------------] EPISODE CARD SECTION [------------------ */
 
 .footer {
   display: flex;
