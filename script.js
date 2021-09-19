@@ -1,15 +1,10 @@
-// ------------------] INITIALIZE PAGE [------------------ //
-
-// Global variables to store episode and show data.
-let allShows = getAllShows();
-let allEpisodes = [];
+// ------------------] GET & SORT DATA [------------------ //
 
 // Gets all episode data from the TVMaze API, stores the result in `allEpisodes` global variable.
-let getEpisodeLibrary = (showID) => {
+let getEpisodeLibrary = (showID, allShows) => {
   fetch(`https://api.tvmaze.com/shows/${showID}/episodes`)
     .then((response) => {
       if (response.status >= 200 && response.status <= 299) {
-        console.log("API Call");
         return response.json();
       } else {
         throw new Error(
@@ -18,15 +13,33 @@ let getEpisodeLibrary = (showID) => {
       }
     })
     .then((episodes) => {
-      allEpisodes = episodes;
-      renderEpisodesPage(allEpisodes);
+      const allEpisodes = episodes;
+      renderEpisodesPage(allEpisodes, allShows);
     })
-    .catch((error) => console.log(error));
+    .catch((error) => console.log(`Error received: ${error}`));
 };
+
+// Gets all shows using `getAllShows()` function then sorts them alphabetically.
+let getSortedShows = () => {
+  const shows = getAllShows();
+  return shows.sort((a, b) => {
+    const showA = a.name.toUpperCase();
+    const showB = b.name.toUpperCase();
+
+    let comparison = 0;
+    if (showA > showB) {
+      comparison = 1;
+    } else if (showA < showB) {
+      comparison = -1;
+    }
+    return comparison;
+  });
+};
+
+// ------------------] INITIALIZE PAGE [------------------ //
 
 // Loads page with shows displayed.
 let setup = () => {
-  allShows = getSortedShow(allShows);
   renderHeader();
   renderMainContentContainer();
   renderShowsPage();
@@ -37,36 +50,37 @@ let setup = () => {
 
 // Renders all shows pulled using the `getAllShows` function and sets the page title.
 let renderShowsPage = () => {
+  const allShows = getSortedShows();
   let infoContainer = document.getElementById("info-container");
   infoContainer.innerText = "TV Show Project";
 
-  renderShowPageHeaderInteractables();
-  renderShowListContainer();
+  renderShowPageHeaderInteractables(allShows);
+  renderShowListContainer(allShows);
   renderAllShows(allShows);
 };
 
 // Renders all shows interactable header elements.
-let renderShowPageHeaderInteractables = () => {
+let renderShowPageHeaderInteractables = (allShows) => {
   removeNavContainerChildren();
-  renderShowSearchBox();
-  renderNumberOfShowsFound();
+  renderShowSearchBox(allShows);
+  renderNumberOfShowsFound(allShows);
   renderShowSelector(allShows);
 };
 
 // Renders all episodes pulled from the TVMaze API.
-let renderEpisodesPage = () => {
-  renderEpisodesPageHeaderInteractables();
+let renderEpisodesPage = (allEpisodes, allShows) => {
+  renderEpisodesPageHeaderInteractables(allEpisodes, allShows);
   renderEpisodeListContainer();
   renderEpisodeCards(allEpisodes);
 };
 
-// Renders all shows interactable header elements.
-let renderEpisodesPageHeaderInteractables = () => {
+// Renders all episode interactable header elements.
+let renderEpisodesPageHeaderInteractables = (allEpisodes, allShows) => {
   removeNavContainerChildren();
-  renderBackButtonShows();
+  renderBackButtonShows(allShows);
   renderEpisodeSelector(allEpisodes);
-  renderEpisodeSearchBox();
-  renderNumberOfEpisodes();
+  renderEpisodeSearchBox(allEpisodes);
+  renderNumberOfEpisodes(allEpisodes);
 };
 
 // Renders header structure.
@@ -96,7 +110,7 @@ let renderEpisodeSelector = (allEpisodes) => {
 };
 
 // Renders episode search box in the header & attaches event listener.
-let renderEpisodeSearchBox = () => {
+let renderEpisodeSearchBox = (allEpisodes) => {
   let navigationContainer = document.getElementById("navigation-container");
   let searchBox = document.createElement("input");
   navigationContainer.appendChild(searchBox);
@@ -113,7 +127,7 @@ let renderEpisodeSearchBox = () => {
 };
 
 // Renders show search box in the header & attaches event listener.
-let renderShowSearchBox = () => {
+let renderShowSearchBox = (allShows) => {
   let navigationContainer = document.getElementById("navigation-container");
   let searchBox = document.createElement("input");
   navigationContainer.appendChild(searchBox);
@@ -138,11 +152,11 @@ let renderShowSelector = (allShows) => {
   showSelector.className = "select-menu";
   showSelector.name = "show-select-menu";
   showSelector.ariaLabel = "Select show";
-  renderShowSelectorList(allShows);
+  renderShowSelectorList(allShows, allShows);
 };
 
 // Renders number of episodes displayed.
-let renderNumberOfEpisodes = () => {
+let renderNumberOfEpisodes = (allEpisodes) => {
   let navigationContainer = document.getElementById("navigation-container");
   let displayNumberOfEpisodes = document.createElement("span");
   navigationContainer.appendChild(displayNumberOfEpisodes);
@@ -152,7 +166,7 @@ let renderNumberOfEpisodes = () => {
 };
 
 // Renders number of shows displayed.
-let renderNumberOfShowsFound = () => {
+let renderNumberOfShowsFound = (allShows) => {
   let navigationContainer = document.getElementById("navigation-container");
   let displayNumberOfShowsFound = document.createElement("span");
   navigationContainer.appendChild(displayNumberOfShowsFound);
@@ -180,12 +194,12 @@ let renderEpisodeSelectorList = (allEpisodes) => {
 
   episodeSelector.addEventListener("change", () => {
     searchAllEpisodes(episodeSelector.value, allEpisodes, episodeSelector.iD);
-    renderBackButton();
+    renderBackButtonEpisodes(allEpisodes);
   });
 };
 
 // Renders `showSelector` list, indirectly adds feedback when a search term is not found (thought this was cool!).
-let renderShowSelectorList = (shows) => {
+let renderShowSelectorList = (shows, allShows) => {
   let showSelector = document.getElementById("show-select-menu");
   showSelector.replaceChildren();
 
@@ -204,14 +218,15 @@ let renderShowSelectorList = (shows) => {
   }
 
   showSelector.addEventListener("change", () => {
-    getEpisodeLibrary(showSelector.value);
+    getEpisodeLibrary(showSelector.value, allShows);
+
     let infoContainer = document.getElementById("info-container");
     infoContainer.innerText = "TV Show Project";
   });
 };
 
 // Renders back navigation button to event and adds event listener.
-let renderBackButton = () => {
+let renderBackButtonEpisodes = (allEpisodes) => {
   let navigationContainer = document.getElementById("navigation-container");
   removeNavContainerChildren();
 
@@ -221,11 +236,11 @@ let renderBackButton = () => {
   button.className = "back-button";
   button.innerText = "Back to Episodes";
 
-  button.addEventListener("click", () => renderEpisodesPage());
+  button.addEventListener("click", () => renderEpisodesPage(allEpisodes));
 };
 
 // Renders back navigation button to shows page and adds event listener.
-let renderBackButtonShows = () => {
+let renderBackButtonShows = (allShows) => {
   let navigationContainer = document.getElementById("navigation-container");
   removeNavContainerChildren();
 
@@ -235,7 +250,7 @@ let renderBackButtonShows = () => {
   button.className = "back-button";
   button.innerText = "Back to Shows";
 
-  button.addEventListener("click", () => renderShowsPage());
+  button.addEventListener("click", () => renderShowsPage(allShows));
 };
 
 // Renders main content container.
@@ -283,7 +298,7 @@ let renderAllShows = (allShows) => {
     card.value = show.id;
 
     card.addEventListener("click", () => {
-      getEpisodeLibrary(card.value);
+      getEpisodeLibrary(card.value, allShows);
       let infoContainer = document.getElementById("info-container");
       infoContainer.innerText = show.name;
     });
@@ -389,22 +404,6 @@ let renderFooter = () => {
 
 // ------------------] HELPER FUNCTIONS [------------------ //
 
-// Sorts show list alphabetically.
-let getSortedShow = (shows) => {
-  return shows.sort((a, b) => {
-    const showA = a.name.toUpperCase();
-    const showB = b.name.toUpperCase();
-
-    let comparison = 0;
-    if (showA > showB) {
-      comparison = 1;
-    } else if (showA < showB) {
-      comparison = -1;
-    }
-    return comparison;
-  });
-};
-
 // Formats and returns an episode code, format `S01E01`.
 let getEpisodeCode = (episode) => {
   let formattedEpisodeCode = "";
@@ -446,7 +445,7 @@ let searchAllShows = (value, allShows) => {
       show.summary.toUpperCase().includes(value.toUpperCase())
     );
   });
-  updateDisplayedShows(filteredShows);
+  updateDisplayedShows(filteredShows, allShows);
 };
 
 // Updates the displayed episodes depending on search or selected episode.
@@ -457,11 +456,11 @@ let updateDisplayedEpisodes = (filteredEpisodes, allEpisodes) => {
 };
 
 // Updates the number of filtered `shows` depending on search or selected episode.
-let updateDisplayedShows = (filteredShows) => {
+let updateDisplayedShows = (filteredShows, allShows) => {
   renderShowListContainer();
   renderAllShows(filteredShows);
   updateNumberOfShowsFound(filteredShows.length);
-  renderShowSelectorList(filteredShows);
+  renderShowSelectorList(filteredShows, allShows);
 };
 
 // Updates the number of episodes being viewed.
