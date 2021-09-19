@@ -86,7 +86,7 @@ let renderEpisodesPageHeaderInteractables = (allEpisodes, allShows) => {
 // Renders header structure.
 let renderHeader = () => {
   let header = document.getElementById("header");
-  let infoContainer = document.createElement("div");
+  let infoContainer = document.createElement("h1");
   header.appendChild(infoContainer);
   infoContainer.id = "info-container";
   infoContainer.className = "info-container";
@@ -350,9 +350,9 @@ let renderAllShows = (allShows) => {
     ul.appendChild(showRuntime);
     showRuntime.innerText = `Runtime: ${show.runtime}`;
 
-    let premiered = document.createElement("li");
-    ul.appendChild(premiered);
-    premiered.innerText = `Premiered: ${show.premiered}`;
+    let showPremiered = document.createElement("li");
+    ul.appendChild(showPremiered);
+    showPremiered.innerText = `Premiered: ${show.premiered}`;
   });
 };
 
