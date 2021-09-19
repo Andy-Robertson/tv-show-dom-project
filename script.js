@@ -97,7 +97,7 @@ let renderHeader = () => {
   navigationContainer.className = "navigation-container";
 };
 
-// Renders the episode selector in the header
+// Renders the episode selector in the header.
 let renderEpisodeSelector = (allEpisodes) => {
   let navigationContainer = document.getElementById("navigation-container");
   let episodeSelector = document.createElement("select");
