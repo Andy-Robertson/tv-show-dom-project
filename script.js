@@ -1,6 +1,6 @@
-// ------------------] GET & SORT DATA [------------------ //
+// ------------------] FETCH & SORT DATA [------------------ //
 
-// Gets all episode data from the TVMaze API, stores the result in `allEpisodes` global variable.
+// Fetch all episode data from the TVMaze API, stores the result in `allEpisodes` function scoped variable.
 let getEpisodeLibrary = (showID, allShows) => {
   fetch(`https://api.tvmaze.com/shows/${showID}/episodes`)
     .then((response) => {
@@ -19,7 +19,7 @@ let getEpisodeLibrary = (showID, allShows) => {
     .catch((error) => console.log(`Error received: ${error}`));
 };
 
-// Gets all shows using `getAllShows()` function then sorts them alphabetically.
+// Gets all shows using `getAllShows()` function, sorts shows alphabetically and stores them in function scoped variable `allShows`.
 let getSortedShows = () => {
   const shows = getAllShows();
   return shows.sort((a, b) => {
@@ -289,6 +289,7 @@ let renderShowListContainer = () => {
 // Renders shows and error corrects null images.
 let renderAllShows = (allShows) => {
   let showListContainer = document.getElementById("show-list-container");
+  window.scrollTo(0, 0);
 
   allShows.forEach((show) => {
     let card = document.createElement("article");
@@ -359,6 +360,7 @@ let renderAllShows = (allShows) => {
 // Render episode cards, adds event listeners for TVMaze episode info and error corrects null images.
 let renderEpisodeCards = (episodeList) => {
   let episodeListContainer = document.getElementById("episode-list-container");
+  window.scrollTo(0, 0);
 
   episodeList.forEach((episode) => {
     let card = document.createElement("article");
@@ -388,7 +390,7 @@ let renderEpisodeCards = (episodeList) => {
 
     let summary = document.createElement("div");
     card.appendChild(summary);
-    summary.innerHTML = episode.summary;
+    summary.innerHTML = truncateCardText(episode.summary, 335);
   });
 };
 
@@ -479,6 +481,13 @@ let updateNumberOfShowsFound = (numberOfShows) => {
 let removeNavContainerChildren = () => {
   let navigationContainer = document.getElementById("navigation-container");
   navigationContainer.replaceChildren();
+};
+
+// Truncate text on cards when required and add an ellipses to the end of the string.
+let truncateCardText = (summary, requiredLength) => {
+  return summary.length > requiredLength
+    ? summary.substr(0, requiredLength) + "<b> &hellip;Read More...</b> <p>"
+    : summary;
 };
 
 // Loads the page.
