@@ -157,7 +157,7 @@
 }
 
 .show-content-container > img {
-  width: 22rem;
+  width: 18rem;
   padding: 0 1rem 1rem 1rem;
 }
 
@@ -216,7 +216,7 @@
 .show-card:focus {
   cursor: pointer;
   border-radius: 25px 8px 25px 8px;
-  transition: all 0.1s ease-in-out;
+  transition: all 0.1s ease-in;
   transform: scale(1.01);
   box-shadow: inset 0 0 100px #04040438;
 }
@@ -250,13 +250,11 @@
     font-size: 2.2rem;
   }
 
-  .show-content-container > div {
-    width: 100%;
-    padding: 0;
+  .show-content-container > div > p {
+    padding: 2rem 1rem 3rem 1rem;
   }
 
-  .show-content-container > div > ul {
-    width: 84%;
-    padding-left: 1rem;
+  img {
+    margin: 0 auto;
   }
 }

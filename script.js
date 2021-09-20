@@ -337,23 +337,23 @@ let renderAllShows = (allShows) => {
 
     let showRating = document.createElement("li");
     ul.appendChild(showRating);
-    showRating.innerText = `Rating: ${show.rating.average}`;
+    showRating.innerHTML = `<b>Rating:</b> ${show.rating.average}`;
 
     let showGenres = document.createElement("li");
     ul.appendChild(showGenres);
-    showGenres.innerText = `Genres: ${show.genres}`;
+    showGenres.innerHTML = `<b>Genres:</b> ${show.genres}`;
 
     let showStatus = document.createElement("li");
     ul.appendChild(showStatus);
-    showStatus.innerText = `Status: ${show.status}`;
+    showStatus.innerHTML = `<b>Status:</b> ${show.status}`;
 
     let showRuntime = document.createElement("li");
     ul.appendChild(showRuntime);
-    showRuntime.innerText = `Runtime: ${show.runtime}`;
+    showRuntime.innerHTML = `<b>Runtime:</b> ${show.runtime}`;
 
     let showPremiered = document.createElement("li");
     ul.appendChild(showPremiered);
-    showPremiered.innerText = `Premiered: ${show.premiered}`;
+    showPremiered.innerHTML = `<b>Premiered:</b> ${show.premiered}`;
   });
 };
 
