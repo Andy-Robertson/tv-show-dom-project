@@ -297,6 +297,8 @@ let renderAllShows = (allShows) => {
     card.id = "show-card";
     card.className = "show-card";
     card.value = show.id;
+    card.tabIndex = 0;
+    card.ariaLabel = `${show.name} TV Show`;
 
     card.addEventListener("click", () => {
       getEpisodeLibrary(card.value, allShows);
@@ -366,8 +368,8 @@ let renderEpisodeCards = (episodeList) => {
     let card = document.createElement("article");
     episodeListContainer.appendChild(card);
     card.className = "episode-card";
-
-    card.addEventListener("click", () => parent.open(episode.url));
+    card.tabIndex = 0;
+    card.ariaLabel = `${episode.name} TV episode`;
 
     let cardTitle = document.createElement("h2");
     card.appendChild(cardTitle);
@@ -390,7 +392,19 @@ let renderEpisodeCards = (episodeList) => {
 
     let summary = document.createElement("div");
     card.appendChild(summary);
-    summary.innerHTML = truncateCardText(episode.summary, 335);
+    summary.className = "summary-text";
+    summary.innerHTML = truncateCardText(episode.summary, 270);
+
+    let episodeMoreContainer = document.createElement("div");
+    card.appendChild(episodeMoreContainer);
+
+    let readMoreButton = document.createElement("button");
+    episodeMoreContainer.appendChild(readMoreButton);
+    readMoreButton.id = "read-more-button";
+    readMoreButton.className = "read-more-button";
+    readMoreButton.innerText = "Read More";
+
+    readMoreButton.addEventListener("click", () => parent.open(episode.url));
   });
 };
 
@@ -486,7 +500,7 @@ let removeNavContainerChildren = () => {
 // Truncate text on cards when required and add an ellipses to the end of the string.
 let truncateCardText = (summary, requiredLength) => {
   return summary.length > requiredLength
-    ? summary.substr(0, requiredLength) + "<b> &hellip;Read More...</b> <p>"
+    ? summary.substr(0, requiredLength) + "<b>&hellip;</b>"
     : summary;
 };
 
