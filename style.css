@@ -110,6 +110,19 @@
   color: #040404;
 }
 
+.nav-sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+  padding-top: 1rem;
+  background-color: #040404;
+}
+
+.sticky {
+  padding-top: 930px;
+}
+
 /* ------------------] SHOW CARD [------------------ */
 
 .show-list-container {

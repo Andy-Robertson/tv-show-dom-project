@@ -91,7 +91,7 @@ let renderHeader = () => {
   infoContainer.id = "info-container";
   infoContainer.className = "info-container";
 
-  let navigationContainer = document.createElement("div");
+  let navigationContainer = document.createElement("nav");
   header.appendChild(navigationContainer);
   navigationContainer.id = "navigation-container";
   navigationContainer.className = "navigation-container";
@@ -504,5 +504,22 @@ let truncateCardText = (summary, requiredLength) => {
     : summary;
 };
 
+// Stickies the nav container to the top of the page when scrolling.
+let navBehaviourOnScroll = () => {
+  let navigationContainer = document.getElementById("navigation-container");
+  let sticky = navigationContainer.offsetTop;
+
+  if (window.pageYOffset > sticky) {
+    navigationContainer.classList.add("nav-sticky");
+  } else {
+    navigationContainer.classList.remove("nav-sticky");
+  }
+};
+
 // Loads the page.
 window.onload = setup();
+
+// Sets floating nav menu behaviour
+window.onscroll = function () {
+  navBehaviourOnScroll();
+};
