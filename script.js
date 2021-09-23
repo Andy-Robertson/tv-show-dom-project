@@ -300,11 +300,11 @@ let renderAllShows = (allShows) => {
     card.tabIndex = 0;
     card.ariaLabel = `${show.name} TV Show`;
 
-    card.addEventListener("click", () => {
-      getEpisodeLibrary(card.value, allShows);
-      let infoContainer = document.getElementById("info-container");
-      infoContainer.innerText = show.name;
-    });
+    // card.addEventListener("click", () => {
+    //   getEpisodeLibrary(card.value, allShows);
+    //   let infoContainer = document.getElementById("info-container");
+    //   infoContainer.innerText = show.name;
+    // });
 
     let cardTitle = document.createElement("h2");
     card.appendChild(cardTitle);
@@ -327,7 +327,21 @@ let renderAllShows = (allShows) => {
 
     let summary = document.createElement("div");
     showContentContainer.appendChild(summary);
-    summary.innerHTML = show.summary;
+    summary.innerHTML = truncateCardText(show.summary, 700);
+
+    summary.addEventListener("click", () => {
+      getEpisodeLibrary(card.value, allShows);
+      let infoContainer = document.getElementById("info-container");
+      infoContainer.innerText = show.name;
+    });
+
+    let readMoreButton = document.createElement("button");
+    summary.appendChild(readMoreButton);
+    readMoreButton.id = "show-read-more-button";
+    readMoreButton.className = "read-more-button";
+    readMoreButton.innerText = "Read More";
+
+    readMoreButton.addEventListener("click", () => parent.open(show.url));
 
     let showInfoContainer = document.createElement("div");
     showContentContainer.appendChild(showInfoContainer);
@@ -400,7 +414,7 @@ let renderEpisodeCards = (episodeList) => {
 
     let readMoreButton = document.createElement("button");
     episodeMoreContainer.appendChild(readMoreButton);
-    readMoreButton.id = "read-more-button";
+    readMoreButton.id = "episode-read-more-button";
     readMoreButton.className = "read-more-button";
     readMoreButton.innerText = "Read More";
 

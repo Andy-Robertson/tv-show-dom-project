@@ -135,6 +135,7 @@
   display: flex;
   flex-direction: column;
   width: 88%;
+  height: 20.5rem;
   margin: 0.5rem;
   border-radius: 8px;
   background-color: #fff;
@@ -144,7 +145,7 @@
 .show-card > h2 {
   padding-left: 1rem;
   text-shadow: 0 2px 3px rgba(4, 4, 4, 0.24);
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 
 .show-info-container > ul {
@@ -153,7 +154,7 @@
   background-color: #d8aa4e13;
   padding: 0 1rem 0 1rem;
   width: 20rem;
-  height: 19.5rem;
+  height: 15.5rem;
   margin: 0 1rem 0 1rem;
   border-radius: 8px;
   box-shadow: 0 0 5px 0 #b48c365d;
@@ -161,7 +162,7 @@
 }
 
 .show-info-container > ul > li {
-  padding: 1.4rem 0 1.4rem 0;
+  padding: 1rem 0 1rem 0;
   list-style: none;
   font-size: 0.9rem;
 }
@@ -174,13 +175,15 @@
 }
 
 .show-content-container > img {
-  width: 18rem;
+  width: 11rem;
+  height: auto;
   padding: 0 1rem 1rem 1rem;
 }
 
 .show-content-container > div > p {
   margin: 0;
   padding: 0 1rem 1rem 1rem;
+  height: 13.3rem;
   max-width: 35rem;
 }
 
@@ -285,7 +288,15 @@
     padding: 2rem 1rem 3rem 1rem;
   }
 
-  img {
+  .show-content-container > img {
     margin: 0 auto;
+  }
+
+  .show-info-container {
+    margin: 0 auto;
+  }
+
+  .show-card {
+    height: 100%;
   }
 }
