@@ -286,6 +286,7 @@
 
   .show-content-container > div > p {
     padding: 2rem 1rem 3rem 1rem;
+    height: 100%;
   }
 
   .show-content-container > img {

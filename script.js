@@ -327,7 +327,8 @@ let renderAllShows = (allShows) => {
 
     let summary = document.createElement("div");
     showContentContainer.appendChild(summary);
-    summary.innerHTML = truncateCardText(show.summary, 700);
+    let formattedSummary = getFormattedSummaryText(show.summary);
+    summary.innerHTML = truncateCardText(formattedSummary, 700);
 
     summary.addEventListener("click", () => {
       getEpisodeLibrary(card.value, allShows);
@@ -407,7 +408,8 @@ let renderEpisodeCards = (episodeList) => {
     let summary = document.createElement("div");
     card.appendChild(summary);
     summary.className = "summary-text";
-    summary.innerHTML = truncateCardText(episode.summary, 270);
+    let formattedSummary = getFormattedSummaryText(episode.summary);
+    summary.innerHTML = truncateCardText(formattedSummary, 270);
 
     let episodeMoreContainer = document.createElement("div");
     card.appendChild(episodeMoreContainer);
@@ -516,6 +518,12 @@ let truncateCardText = (summary, requiredLength) => {
   return summary.length > requiredLength
     ? summary.substr(0, requiredLength) + "<b>&hellip;</b>"
     : summary;
+};
+
+// Format summary text - strip out multiple <p> tags and append a new opening and closing set.
+let getFormattedSummaryText = (summary) => {
+  let pTagsRemoved = summary.replace(/<\/?p[^>]*>/g, "");
+  return `<p>${pTagsRemoved}</p>`;
 };
 
 // Stickies the nav container to the top of the page when scrolling.
