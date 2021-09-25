@@ -117,6 +117,7 @@
   z-index: 1;
   padding-top: 1rem;
   background-color: #040404;
+  opacity: 0.8;
 }
 
 .sticky {
@@ -140,9 +141,11 @@
   border-radius: 8px;
   background-color: #fff;
   box-shadow: 0 0 5px 0 #b48c3646;
+  font-family: "Source Sans Pro", sans-serif;
 }
 
 .show-card > h2 {
+  font-family: "Playfair Display", serif;
   padding-left: 1rem;
   text-shadow: 0 2px 3px rgba(4, 4, 4, 0.24);
   margin-bottom: 1rem;
@@ -244,11 +247,11 @@
 .episode-card:focus,
 .show-card:hover,
 .show-card:focus {
-  cursor: pointer;
   border-radius: 25px 8px 25px 8px;
   transition: transform 0.1s ease-in;
   transform: scale(1.01);
   box-shadow: inset 0 0 100px #04040438;
+  cursor: pointer;
 }
 
 .episode-card:hover {
@@ -277,16 +280,47 @@
 
 /* ------------------] MEDIA QUERIES [------------------ */
 
-/* Small devices */
-@media only screen and (max-width: 576px) {
+/* Large devices (Laptops+) */
+@media only screen and (max-width: 1440px) {
+  .show-content-container > div > p {
+    font-size: 0.85rem;
+    max-width: 17rem;
+  }
+
+  .show-info-container > ul {
+    width: 9rem;
+  }
+
+  .show-info-container > ul > li {
+    font-size: 0.7rem;
+  }
+}
+
+/* Medium devices (Tablet-L) */
+@media only screen and (max-width: 1024px) {
+  .show-card {
+    width: 65%;
+    height: 100%;
+  }
+
+  .show-content-container {
+    justify-content: flex-start;
+  }
+
+  .show-content-container > div > p {
+    height: auto;
+  }
+}
+
+/* Medium devices (Tablet) */
+@media only screen and (max-width: 768px) {
   .info-container {
     height: 3rem;
     font-size: 2.2rem;
   }
 
-  .show-content-container > div > p {
-    padding: 2rem 1rem 3rem 1rem;
-    height: 100%;
+  .show-content-container {
+    justify-content: center;
   }
 
   .show-content-container > img {
@@ -296,8 +330,16 @@
   .show-info-container {
     margin: 0 auto;
   }
+}
 
+/* Small devices (Mobile) */
+@media only screen and (max-width: 576px) {
   .show-card {
+    width: 88%;
     height: 100%;
+  }
+
+  .show-content-container > div > p {
+    padding: 2rem 1rem 3rem 1rem;
   }
 }

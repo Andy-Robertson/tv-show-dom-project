@@ -22,6 +22,7 @@ let getEpisodeLibrary = (showID, allShows) => {
 // Gets all shows using `getAllShows()` function, sorts shows alphabetically and stores them in function scoped variable `allShows`.
 let getSortedShows = () => {
   const shows = getAllShows();
+
   return shows.sort((a, b) => {
     const showA = a.name.toUpperCase();
     const showB = b.name.toUpperCase();
@@ -300,12 +301,6 @@ let renderAllShows = (allShows) => {
     card.tabIndex = 0;
     card.ariaLabel = `${show.name} TV Show`;
 
-    // card.addEventListener("click", () => {
-    //   getEpisodeLibrary(card.value, allShows);
-    //   let infoContainer = document.getElementById("info-container");
-    //   infoContainer.innerText = show.name;
-    // });
-
     let cardTitle = document.createElement("h2");
     card.appendChild(cardTitle);
     cardTitle.innerText = show.name;
@@ -325,24 +320,30 @@ let renderAllShows = (allShows) => {
     img.alt = `${show.name} front cover`;
     img.title = show.name;
 
-    let summary = document.createElement("div");
-    showContentContainer.appendChild(summary);
-    let formattedSummary = getFormattedSummaryText(show.summary);
-    summary.innerHTML = truncateCardText(formattedSummary, 700);
+    let summaryContainer = document.createElement("div");
+    showContentContainer.appendChild(summaryContainer);
 
-    summary.addEventListener("click", () => {
+    let summary = document.createElement("p");
+    summaryContainer.appendChild(summary);
+    let formattedSummary = getFormattedSummaryText(show.summary);
+    summary.innerHTML = truncateCardText(formattedSummary, 680);
+
+    card.addEventListener("click", () => {
       getEpisodeLibrary(card.value, allShows);
       let infoContainer = document.getElementById("info-container");
       infoContainer.innerText = show.name;
     });
 
     let readMoreButton = document.createElement("button");
-    summary.appendChild(readMoreButton);
+    summaryContainer.appendChild(readMoreButton);
     readMoreButton.id = "show-read-more-button";
     readMoreButton.className = "read-more-button";
     readMoreButton.innerText = "Read More";
 
-    readMoreButton.addEventListener("click", () => parent.open(show.url));
+    readMoreButton.addEventListener("click", (event) => {
+      event.stopPropagation();
+      parent.open(show.url);
+    });
 
     let showInfoContainer = document.createElement("div");
     showContentContainer.appendChild(showInfoContainer);
@@ -405,8 +406,11 @@ let renderEpisodeCards = (episodeList) => {
     img.alt = `${episode.name} front cover`;
     img.title = episode.name;
 
-    let summary = document.createElement("div");
-    card.appendChild(summary);
+    let summaryContainer = document.createElement("div");
+    card.appendChild(summaryContainer);
+
+    let summary = document.createElement("p");
+    summaryContainer.appendChild(summary);
     summary.className = "summary-text";
     let formattedSummary = getFormattedSummaryText(episode.summary);
     summary.innerHTML = truncateCardText(formattedSummary, 270);
@@ -520,10 +524,9 @@ let truncateCardText = (summary, requiredLength) => {
     : summary;
 };
 
-// Format summary text - strip out multiple <p> tags and append a new opening and closing set.
+// Format summary text - strip out all <p> tags.
 let getFormattedSummaryText = (summary) => {
-  let pTagsRemoved = summary.replace(/<\/?p[^>]*>/g, "");
-  return `<p>${pTagsRemoved}</p>`;
+  return summary.replace(/<\/?p[^>]*>/g, "");
 };
 
 // Stickies the nav container to the top of the page when scrolling.
