@@ -41,7 +41,8 @@
 .select-menu,
 .search-box,
 .back-button,
-.read-more-button {
+.read-more-button,
+.show-fav-button {
   margin: 0 0 0.5rem 1rem;
   color: #fff;
   background-color: #3b3939;
@@ -100,7 +101,9 @@
 .back-button:hover,
 .back-button:focus,
 .read-more-button:hover,
-.read-more-button:focus {
+.read-more-button:focus,
+.show-fav-button:hover,
+.show-fav-button:focus {
   cursor: pointer;
   outline: none;
   box-shadow: inset 0 0 30px #04040480;
@@ -190,6 +193,13 @@
   max-width: 35rem;
 }
 
+.add-fav-show {
+
+  border: 2px solid orange;
+}
+
+
+
 /* ------------------] EPISODE CARDS [------------------ */
 
 .episode-list-container {
@@ -237,7 +247,8 @@
   height: 12rem;
 }
 
-.read-more-button {
+.read-more-button,
+.show-fav-button {
   padding: 0.1rem 0.1rem 0.1rem 0.1rem;
   width: 7rem;
   font-size: 0.7rem;

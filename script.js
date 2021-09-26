@@ -345,6 +345,17 @@ let renderAllShows = (allShows) => {
       parent.open(show.url);
     });
 
+    let favButton = document.createElement("button");
+    summaryContainer.appendChild(favButton);
+    favButton.id = "show-fav-button";
+    favButton.className = "show-fav-button";
+    favButton.innerText = "Favorite";
+
+    favButton.addEventListener("click", (event) => {
+      event.stopPropagation();
+      setShowFavoriteStatus(show.name, show.id);
+    });
+
     let showInfoContainer = document.createElement("div");
     showContentContainer.appendChild(showInfoContainer);
     showInfoContainer.id = "show-info-container";
@@ -538,6 +549,21 @@ let navBehaviourOnScroll = () => {
     navigationContainer.classList.add("nav-sticky");
   } else {
     navigationContainer.classList.remove("nav-sticky");
+  }
+};
+
+// Set show favorite status and save in local storage
+let setShowFavoriteStatus = (showName, showId) => {
+  let card = document.getElementById("show-card");
+
+  if (localStorage.getItem(showName)) {
+    console.log(showName + "Removed");
+    card.classList.remove("add-fav-show");
+    localStorage.removeItem(showName);
+  } else {
+    console.log(showName + "Added");
+    card.classList.add("add-fav-show");
+    localStorage.setItem(showName, true);
   }
 };
 
