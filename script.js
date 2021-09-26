@@ -251,7 +251,10 @@ let renderBackButtonShows = (allShows) => {
   button.className = "back-button";
   button.innerText = "Back to Shows";
 
-  button.addEventListener("click", () => renderShowsPage(allShows));
+  button.addEventListener("click", () => {
+    renderShowsPage(allShows);
+    window.scrollTo(0, 0);
+  });
 };
 
 // Renders main content container.
@@ -290,7 +293,6 @@ let renderShowListContainer = () => {
 // Renders shows and error corrects null images.
 let renderAllShows = (allShows) => {
   let showListContainer = document.getElementById("show-list-container");
-  window.scrollTo(0, 0);
 
   allShows.forEach((show) => {
     let card = document.createElement("article");
@@ -300,6 +302,10 @@ let renderAllShows = (allShows) => {
     card.value = show.id;
     card.tabIndex = 0;
     card.ariaLabel = `${show.name} TV Show`;
+
+    if (localStorage.getItem(show.name)) {
+      card.classList.add("add-fav-show");
+    }
 
     let cardTitle = document.createElement("h2");
     card.appendChild(cardTitle);
@@ -353,7 +359,7 @@ let renderAllShows = (allShows) => {
 
     favButton.addEventListener("click", (event) => {
       event.stopPropagation();
-      setShowFavoriteStatus(show.name, show.id);
+      setShowFavoriteStatus(show.name, allShows);
     });
 
     let showInfoContainer = document.createElement("div");
@@ -552,18 +558,14 @@ let navBehaviourOnScroll = () => {
   }
 };
 
-// Set show favorite status and save in local storage
-let setShowFavoriteStatus = (showName, showId) => {
-  let card = document.getElementById("show-card");
-
+// Set show favorite status and stores as a boolean in local storage.
+let setShowFavoriteStatus = (showName, allShows) => {
   if (localStorage.getItem(showName)) {
-    console.log(showName + "Removed");
-    card.classList.remove("add-fav-show");
     localStorage.removeItem(showName);
+    renderShowsPage(allShows);
   } else {
-    console.log(showName + "Added");
-    card.classList.add("add-fav-show");
     localStorage.setItem(showName, true);
+    renderShowsPage(allShows);
   }
 };
 
