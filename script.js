@@ -298,13 +298,14 @@ let renderAllShows = (allShows) => {
     let card = document.createElement("article");
     showListContainer.appendChild(card);
     card.id = "show-card";
-    card.className = "show-card";
+    card.classList.add("show-card", "card-hover");
     card.value = show.id;
     card.tabIndex = 0;
     card.ariaLabel = `${show.name} TV Show`;
 
     if (localStorage.getItem(show.name)) {
-      card.classList.add("add-fav-show");
+      card.classList.add("add-fav-show", "hover-fav-show");
+      card.classList.remove("card-hover");
     }
 
     let cardTitle = document.createElement("h2");
@@ -400,7 +401,7 @@ let renderEpisodeCards = (episodeList) => {
   episodeList.forEach((episode) => {
     let card = document.createElement("article");
     episodeListContainer.appendChild(card);
-    card.className = "episode-card";
+    card.classList.add("episode-card", "card-hover");
     card.tabIndex = 0;
     card.ariaLabel = `${episode.name} TV episode`;
 
