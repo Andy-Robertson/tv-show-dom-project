@@ -356,11 +356,11 @@ let renderAllShows = (allShows) => {
     summaryContainer.appendChild(favButton);
     favButton.id = "show-fav-button";
     favButton.className = "show-fav-button";
-    favButton.innerText = "Favorite";
+    favButton.innerText = "Favourite ";
 
     favButton.addEventListener("click", (event) => {
       event.stopPropagation();
-      setShowFavoriteStatus(show.name, allShows);
+      setShowFavouriteStatus(show.name, allShows);
     });
 
     let showInfoContainer = document.createElement("div");
@@ -443,6 +443,14 @@ let renderEpisodeCards = (episodeList) => {
     readMoreButton.innerText = "Read More";
 
     readMoreButton.addEventListener("click", () => parent.open(episode.url));
+
+    let notesButton = document.createElement("button");
+    episodeMoreContainer.appendChild(notesButton);
+    notesButton.id = "episode-notes-button";
+    notesButton.className = "episode-notes-button";
+    notesButton.innerText = "Episode Note";
+
+    notesButton.addEventListener("click", () => renderNotesInterface());
   });
 };
 
@@ -456,9 +464,13 @@ let renderFooter = () => {
     "<ul><li>All episode data from: <a href='https://www.tvmaze.com/api#licensing' target='Blank'>TVMaze.com</a></li></ul>";
 };
 
+let renderNotesInterface = () => {
+  setEpisodeNote();
+};
+
 // ------------------] HELPER FUNCTIONS [------------------ //
 
-// Formats and returns an episode code, format `S01E01`.
+// Formats and returns an episode code, format `S01E01`, handles episodes and seasons upto 999 (future proof!).
 let getEpisodeCode = (episode) => {
   let formattedEpisodeCode = "";
 
@@ -559,8 +571,8 @@ let navBehaviourOnScroll = () => {
   }
 };
 
-// Set show favorite status and stores as a boolean in local storage.
-let setShowFavoriteStatus = (showName, allShows) => {
+// Set show favourite status and stores as a boolean in local storage.
+let setShowFavouriteStatus = (showName, allShows) => {
   if (localStorage.getItem(showName)) {
     localStorage.removeItem(showName);
     renderShowsPage(allShows);
@@ -569,6 +581,9 @@ let setShowFavoriteStatus = (showName, allShows) => {
     renderShowsPage(allShows);
   }
 };
+
+// Set user note on selected show episode
+let setEpisodeNote = () => {};
 
 // Loads the page.
 window.onload = setup();

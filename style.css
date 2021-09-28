@@ -42,7 +42,8 @@
 .search-box,
 .back-button,
 .read-more-button,
-.show-fav-button {
+.show-fav-button,
+.episode-notes-button {
   margin: 0 0 0.5rem 1rem;
   color: #fff;
   background-color: #3b3939;
@@ -103,7 +104,9 @@
 .read-more-button:hover,
 .read-more-button:focus,
 .show-fav-button:hover,
-.show-fav-button:focus {
+.show-fav-button:focus,
+.episode-notes-button:hover,
+.episode-notes-button:focus {
   cursor: pointer;
   outline: none;
   box-shadow: inset 0 0 30px #04040480;
@@ -246,9 +249,10 @@
 }
 
 .read-more-button,
-.show-fav-button {
-  padding: 0.1rem;
-  width: 7rem;
+.show-fav-button,
+.episode-notes-button {
+  padding: 0.2rem;
+  width: 8.5rem;
   font-size: 0.7rem;
 }
 
@@ -288,7 +292,7 @@
   color: #b48c36;
 }
 
-/* ------------------] MEDIA QUERIES [------------------ */
+/* --------------] MEDIA QUERIES [-------------- */
 
 /* Large devices (Laptops+) */
 @media only screen and (max-width: 1440px) {
