@@ -14,7 +14,7 @@ TV Show utilises the TV Maze [REST API](https://www.tvmaze.com) to organize, sor
 
 ## How to run in VSCode
 
-1. Clone files using `git clone git@github.com:Andy-Robertson/Full-Stack-Project-Assessment.git`.
+1. Clone files using `git clone git@github.com:Andy-Robertson/tv-show-dom-project.git`.
 2. Go Live inside VSCode using the [Live Server] (https://github.com/ritwickdey/vscode-live-server-plus-plus).
 
 ## Technologies
