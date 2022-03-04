@@ -36,6 +36,6 @@ TV Show utilises the TV Maze [REST API](https://www.tvmaze.com) to organize, sor
 ## Preview
 
 Episode Listing Page
-![SpaceX-API-React-App](https://andy-robertson.dev/static/media/tvshow.5958eda5.png)
+![TV-Show-App](https://andy-robertson.dev/static/media/tvshow.5958eda5.png)
 
 
