@@ -25,7 +25,7 @@ TV Show utilises the TV Maze [REST API](https://www.tvmaze.com) to organize, sor
 
 ## Future Development
 
-1. Add episode note functionality
+1. Complete episode note functionality
 2. Refactor code
 3. Add tests
 
