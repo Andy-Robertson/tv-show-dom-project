@@ -1,5 +1,10 @@
 # TV Show REST API App
 
+## Preview
+
+Main Dashboard
+![TV-SHOW-APP](https://i.ibb.co/pwCFmNW/tvshow.png)
+
 ## Description
 
 TV Show utilises the TV Maze [REST API](https://www.tvmaze.com) to organize, sort and search TV shows and episodes making it easy to find information about specific shows or episodes. Completed as part of the CodeYourFutures Full-Stack Web Development Bootcamp.
