@@ -1,13 +1,41 @@
-# TV Show DOM Project
+# TV Show REST API App
 
-A starting point for CYF's TV show DOM project
+## Description
 
-The requirements for the project are here:
+TV Show utilises the TV Maze [REST API](https://www.tvmaze.com) to organize, sort and search TV shows and episodes making it easy to find information about specific shows or episodes. Completed as part of the CodeYourFutures Full-Stack Web Development Bootcamp.
 
-https://syllabus.codeyourfuture.io/js-core-3/tv-show-dom-project/readme
+## Feature List
+- Dynamic show/episode search & drop-down selector
+- Display total number of shows/episodes
+- Select favourite shows (local storage)
+- Direct link to show/episode on TVMaze
+- Sticky navigation bar when scrolling
+- Fully Responsive
 
-## Solution
+## How to run in VSCode
 
-The solution to this project will be given to you after you have completed it. You will be able to find the solution here
+1. Clone files using `git clone git@github.com:Andy-Robertson/tv-show-dom-project.git`.
+2. Go Live inside VSCode using the [Live Server](https://github.com/ritwickdey/vscode-live-server-plus-plus).
 
-https://github.com/CodeYourFuture/tv-show-dom-project-solution
+## Technologies
+
+- HTML
+- CSS
+- JavaScript
+
+## Future Development
+
+1. Complete episode note functionality
+2. Refactor code
+3. Add tests
+
+## Deployment
+
+[The TV Show app is deployed on Netlify](https://cyf-andy-robertson-tv.netlify.app/)
+
+## Preview
+
+Main Dashboard
+![TV-SHOW-APP](https://i.ibb.co/pwCFmNW/tvshow.png)
+
+
