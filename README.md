@@ -38,9 +38,4 @@ TV Show utilises the TV Maze [REST API](https://www.tvmaze.com) to organize, sor
 
 [The TV Show app is deployed on Netlify](https://cyf-andy-robertson-tv.netlify.app/)
 
-## Preview
-
-Episode Listing Page
-![TV-Show-App](https://andy-robertson.dev/static/media/tvshow.5958eda5.png)
-
 
